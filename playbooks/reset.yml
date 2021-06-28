@@ -159,7 +159,7 @@
 # ----------------------------------------------------------------------
 
 - name: Resetting Nodes
-  hosts: node1,node2,node3,node4
+  hosts: node3,node4
   strategy: free
   ignore_errors: true
   tasks:
@@ -337,91 +337,6 @@
       force: yes
   - name: Changing User Password
     shell: echo password | sudo passwd user --stdin
-
-# ----------------------------------------------------------------------
-
-- name: Finishing Up Node 1
-  hosts: node1
-  strategy: free
-  ignore_errors: true
-  tasks:
-  - name: Setting Hostname
-    hostname: name=node1.ansi.example.com
-
-  - name: Configuring network
-    command: nmcli con mod 'System eth1' ipv4.addresses 192.168.55.201/24 ipv4.gateway 192.168.55.1 ipv4.method manual
-  - name: Restarting Network
-    service:
-      name: NetworkManager
-      state: restarted
-
-  - name: Building Welcome Message
-    blockinfile:
-      dest: /etc/profile.d/welcome.sh
-      block: |
-        #!/bin/bash
-        #
-        echo -e '       
-        #           _            _           _           _       _              
-        #          /\ \     _   /\ \        /\ \        /\ \    / /\            
-        #         /  \ \   /\_\/  \ \      /  \ \____  /  \ \  / /  \           
-        #        / /\ \ \_/ / / /\ \ \    / /\ \_____\/ /\ \ \/_/ /\ \          
-        #       / / /\ \___/ / / /\ \ \  / / /\/___  / / /\ \_\_\/\ \ \         
-        #      / / /  \/____/ / /  \ \_\/ / /   / / / /_/_ \/_/    \ \ \        
-        #     / / /    / / / / /   / / / / /   / / / /____/\        \ \ \       
-        #    / / /    / / / / /   / / / / /   / / / /\____\/         \ \ \      
-        #   / / /    / / / / /___/ / /\ \ \__/ / / / /______        __\ \ \___  
-        #  / / /    / / / / /____\/ /  \ \___\/ / / /_______\      /___\_\/__/\ 
-        #  \/_/     \/_/\/_________/    \/_____/\/__________/      \_________\/ 
-        '"#
-        #
-        # You are logged into \"`hostname`\" as the \"`whoami`\" account.
-        # This system is running `cat /etc/redhat-release`
-        #
-        "
-
-# ----------------------------------------------------------------------
-
-- name: Finishing Up Node 2
-  hosts: node2
-  strategy: free
-  ignore_errors: true
-  tasks:
-  - name: Setting Hostname
-    hostname: name=node2.ansi.example.com
-
-  - name: Configuring network
-    command: nmcli con mod 'System eth1' ipv4.addresses 192.168.55.202/24 ipv4.gateway 192.168.55.1 ipv4.method manual
-  - name: Restarting Network
-    service: 
-      name: NetworkManager
-      state: restarted
-
-  - name: Building Welcome Message
-    blockinfile:
-      dest: /etc/profile.d/welcome.sh
-      block: |
-         #!/bin/bash
-         #
-         echo -e '       
-         #           _            _           _           _        _       
-         #          /\ \     _   /\ \        /\ \        /\ \    /\ \      
-         #         /  \ \   /\_\/  \ \      /  \ \____  /  \ \  /  \ \     
-         #        / /\ \ \_/ / / /\ \ \    / /\ \_____\/ /\ \ \/ /\ \ \    
-         #       / / /\ \___/ / / /\ \ \  / / /\/___  / / /\ \_\/_/\ \ \   
-         #      / / /  \/____/ / /  \ \_\/ / /   / / / /_/_ \/_/   / / /   
-         #     / / /    / / / / /   / / / / /   / / / /____/\     / / /    
-         #    / / /    / / / / /   / / / / /   / / / /\____\/    / / /  _  
-         #   / / /    / / / / /___/ / /\ \ \__/ / / / /______   / / /_/\_\ 
-         #  / / /    / / / / /____\/ /  \ \___\/ / / /_______\ / /_____/ / 
-         #  \/_/     \/_/\/_________/    \/_____/\/__________/ \________/  
-         '"#
-         #
-         # You are logged into \"`hostname`\" as the \"`whoami`\" account.
-         # This system is running `cat /etc/redhat-release`
-         #
-         "
-
 
 # ----------------------------------------------------------------------
 

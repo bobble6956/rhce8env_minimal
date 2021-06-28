@@ -24,48 +24,6 @@ config.vm.define "repo" do |repo|
   end
 end
 
-# Node 1
-config.vm.define "node1" do |node1|
-  node1.vm.box = "rdbreak/rhel8node"
-#  node1.vm.hostname = "node1.ansi.example.com"
-  node1.vm.network "private_network", ip: "192.168.55.201"
-  node1.vm.provider "virtualbox" do |node1|
-    node1.memory = "1024"
-
-    unless File.exist?(file_to_disk1)
-      node1.customize ['createhd', '--filename', file_to_disk1, '--variant', 'Fixed', '--size', 2 * 1024]
-      node1.customize ['storagectl', :id, '--name', 'SATA Controller', '--add', 'sata', '--portcount', 2]
-      node1.customize ['storageattach', :id,  '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_to_disk1]
-      end
-  end
-  
-    node1.vm.provision "shell", inline: <<-SHELL
-    yes| sudo mkfs.ext4 /dev/sdb
-    SHELL
-    node1.vm.synced_folder ".", "/vagrant"
- end
-
-# Node 2
-config.vm.define "node2" do |node2|
-  node2.vm.box = "rdbreak/rhel8node"
-#  node2.vm.hostname = "node2.ansi.example.com"
-  node2.vm.network "private_network", ip: "192.168.55.202"
-  node2.vm.provider "virtualbox" do |node2|
-    node2.memory = "1024"
-
-    unless File.exist?(file_to_disk2)
-      node2.customize ['createhd', '--filename', file_to_disk2, '--variant', 'Fixed', '--size', 2 * 1024]
-      node2.customize ['storagectl', :id, '--name', 'SATA Controller', '--add', 'sata', '--portcount', 2]
-      node2.customize ['storageattach', :id,  '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_to_disk2]
-      end
- end
- 
-    node2.vm.provision "shell", inline: <<-SHELL
-    yes| sudo mkfs.ext4 /dev/sdb
-    SHELL
-    node2.vm.synced_folder ".", "/vagrant"
-end
-
 # Node 3
 config.vm.define "node3" do |node3|
   node3.vm.box = "rdbreak/rhel8node"

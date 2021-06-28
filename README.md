@@ -146,4 +146,4 @@ Running the 'vagrant up' environment build will fail If HyperV is installed on t
 Error is usually "VT-x is not available. (VERR_VMX_NO_VMX)" or similar, when the script attempts to boot the first VM.
 
 Resolution seems to be either remove HyperV, or preventing its hypervisor from starting with the command:
-bcdedit /set hypervisorlaunchtype off, followed by a reboot.
+bcdedit /set hypervisorlaunchtype off, followed by a reboot.# rhce8env_minimal
