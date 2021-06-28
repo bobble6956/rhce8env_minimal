@@ -1,0 +1,11 @@
+{
+    "name": "rdbreak/rhel8repo",
+    "description": "Blah",
+    "versions": [{
+        "version": "1.0",
+        "providers": [{
+            "name": "virtualbox",
+            "url": "file:///C:/Users/leanh/Downloads/repo.vbox"
+        }]
+    }]
+}
